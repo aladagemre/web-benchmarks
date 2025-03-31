@@ -4,6 +4,6 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = ["django.contrib.contenttypes", "django_app"]
 MIDDLEWARE = []
 ROOT_URLCONF = "django_app.urls"
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite3"}}
+DATABASES = {"default": {"ENGINE": "django.db.backends.postgresql", "NAME": "robyn_db", "USER": "robynuser", "PASSWORD": "robynpass", "HOST": "postgres", "PORT": "5432"}}
 USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

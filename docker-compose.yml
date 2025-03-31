@@ -1,10 +1,25 @@
 services:
+
+  postgres:
+    image: postgres:14
+    restart: always
+    environment:
+      POSTGRES_USER: robynuser
+      POSTGRES_PASSWORD: robynpass
+      POSTGRES_DB: robyn_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   django_app:
     build:
       context: ./django_app
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    depends_on:
+      - postgres
     environment:
       - DJANGO_SETTINGS_MODULE=django_app.settings
     command: ["gunicorn", "django_app.wsgi", "--bind", "0.0.0.0:8000"]
@@ -15,6 +30,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8001:8001"
+    depends_on:
+      - postgres
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
 
   robyn_app:
@@ -23,7 +40,25 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8002:8002"
+    depends_on:
+      - postgres
     command: ["python", "app.py"]
+  robyn_tortoise_app:
+    build:
+      context: ./robyn_tortoise_app
+    ports:
+      - "8003:8003"
+    depends_on:
+      - postgres
+    command: ["python", "app.py"]
+  
+  go_gin_app:
+    build:
+      context: ./go_gin_app
+    ports:
+      - "8004:8004"
+    depends_on:
+      - postgres
 
   wrk_benchmark:
     image: python:3.11-slim
@@ -31,3 +66,7 @@ services:
       - .:/app
     working_dir: /app
     command: ["python", "benchmark_runner.py"]
+
+
+volumes:
+  pgdata:

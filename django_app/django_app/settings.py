@@ -1,0 +1,9 @@
+SECRET_KEY = "benchmark"
+DEBUG = True
+ALLOWED_HOSTS = ["*"]
+INSTALLED_APPS = ["django.contrib.contenttypes", "django_app"]
+MIDDLEWARE = []
+ROOT_URLCONF = "django_app.urls"
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": "db.sqlite3"}}
+USE_TZ = True
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

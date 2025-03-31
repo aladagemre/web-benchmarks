@@ -4,9 +4,11 @@ import csv
 import matplotlib.pyplot as plt
 
 services = {
-    "Django": "http://localhost:8000/users",
-    "FastAPI": "http://localhost:8001/users",
-    "Robyn": "http://localhost:8002/users"
+    "Django+DjangoORM": "http://localhost:8000/users",
+    "Robyn+Pony": "http://localhost:8002/users",
+    "FastAPI+SQLAlchemy": "http://localhost:8001/users",
+    "Robyn+Tortoise": "http://localhost:8003/users",
+    "Go+Gin+pgxpool": "http://localhost:8004/users"
 }
 
 results = []
@@ -32,13 +34,23 @@ def write_csv():
     print("✅ benchmark_results.csv yazıldı.")
 
 def plot_graph():
+    # Set the figure size before creating the plot (width: 12, height: 6)
+    plt.figure(figsize=(12, 6))
+    
     labels = [r["service"] for r in results]
     values = [r["rps"] for r in results]
 
     plt.bar(labels, values)
-    plt.title("Benchmark RPS Karşılaştırması")
+    plt.title("Benchmark RPS Comparison")
     plt.ylabel("Requests per Second (RPS)")
-    plt.savefig("benchmark_results.png")
+    
+    # Rotate labels 45 degrees and adjust their position
+    plt.xticks(rotation=45, ha='right')
+    
+    # Adjust layout to prevent label cutoff
+    plt.tight_layout()
+    
+    plt.savefig("benchmark_results.png", dpi=300)
     print("📊 benchmark_results.png oluşturuldu.")
 
 if __name__ == "__main__":

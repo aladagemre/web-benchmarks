@@ -1,3 +1,14 @@
+install_dependencies:
+	pip install -r wrk_benchmark/requirements.txt
+	make rebuild_django
+	make rebuild_fastapi
+	make rebuild_robyn
+	make rebuild_robyn_tortoise
+	make rebuild_go_gin
+
+benchmark:
+	python wrk_benchmark/benchmark_runner.py
+
 django:
 	wrk -t4 -c100 -d10s http://localhost:8000/users
 fastapi:
@@ -32,7 +43,6 @@ rebuild_robyn_tortoise:
 	docker-compose build robyn_tortoise_app
 	docker-compose up -d robyn_tortoise_app
 	docker compose exec robyn_tortoise_app python init_db.py
-	
 	
 
 rebuild_go_gin:

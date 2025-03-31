@@ -1,0 +1,6 @@
+service,rps
+Django+DjangoORM,430.6
+Robyn+Pony,498.45
+FastAPI+SQLAlchemy,1511.57
+Robyn+Tortoise,8044.6
+Go+Gin+pgxpool,23085.57

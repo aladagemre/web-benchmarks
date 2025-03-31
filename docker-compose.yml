@@ -61,9 +61,11 @@ services:
       - postgres
 
   wrk_benchmark:
-    image: python:3.11-slim
+    build:
+      context: ./wrk_benchmark
+      dockerfile: Dockerfile
     volumes:
-      - .:/app
+      - ./wrk_benchmark:/app
     working_dir: /app
     command: ["python", "benchmark_runner.py"]
 
